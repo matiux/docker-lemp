@@ -18,6 +18,36 @@ docker build \
 -t matiux/php:7.3.5-fpm-alpine3.9-base .
 ```
 
+Tag do un'immagine dopo la build:
+
+```bash
+docker tag <id_immagine> \
+matiux/php:7.3.5-fpm-alpine3.9-base
+```
+
+E' anche possibile aggiungere più tag contemporaneamente:
+
+```bash
+docker build \
+-t matiux/php:7.3.5-fpm-alpine3.9-base \
+-t latest \
+.
+```
+
+Se un'immagine ha più tag è possibile rimuovere un tag, in questo modo non verrà cancellata l'immagine ma solo il tag: 
+
+```bash
+docker rmi matiux/php:7.3.5-fpm-alpine3.9-base
+```
+
+Rinominare un tag: 
+
+```bash
+docker tag <id_immagine> <nuovo_tag>
+docker tag b7bb3ad94649 matiux/php:7.3.5-fpm-alpine3.9-base
+```
+
+
 ### Gestione hub:
 * Login all'hub: `docker login`
 * Push immagine sull'hub: `docker push matiux/php:7.3.5-fpm-alpine3.9-dev`
@@ -135,8 +165,19 @@ Lo script si occupa di identificare il giusto host in base al sistema operativo 
 * PHP 7.3.5 fpm - Apline 3.9 (`docker/php/alpine/3.9/7.3.5-fpm`)
 * PHP 7.1.29 fpm - Apline 3.9 (`docker/php/alpine/3.9/7.1.29-fpm`)
 * PHP 7.0.33 fpm - Apline 3.7 (`docker/php/alpine/3.7/7.0.33-fpm`)
+* PHP 5.6.40 fpm - Apline 3.8 (`docker/php/alpine/3.8/5.6.40-fpm`)
+
+### Comandi Docker utili:
+
+* Pulizia totale: `docker system prune -af --volumes`
+* Stop di tutti i container: `docker stop $(docker ps -aq)`
+* Eliminazione di tutti i container stoppati: `docker rm -f $(docker ps -aq)`
+* Eliminazione delle immagini: `docker rmi -f $(docker images -aq)`
+* Informazioni sul volume: `docker volume inspect <id_volume>`
+* Ottenere l'ip di un container: `docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nomecontainer`
 
 ### Miscellanea:
+
 * Le cartelle `public` e `docker/php/test` servono a provare la configurazione `docker-compose` simulando una document root per il virtual host.
 * Le immagini `dev` sono tutte configurate con oh-my-zsh, vim, xdebug e shell history. Il file viene creato in `docker/data/shell_history/.zsh_history` ma ovviamente non è versionato.
 * Quando si usa un'immagine mysql / mariadb è possibile caricare un dump di un db (compresso o no) mettendolo nella cartella `docker/data/db`. Montando il volume nell'apposito entrypoint, in fase di up questo verrà caricato.
@@ -151,10 +192,5 @@ servicemysql:
 ```
 
 * Dentro a ogni container è possibile raggiungere gli altri, usando come host il nome del servizio definito nel file `docker/docker-compose.yml`. Ad esempio l'host del db potrebbe essere `servicemysql`
-
-### Comandi Docker utili:
-
-* Pulizia totale: `docker system prune -af --volumes`
-* Stop di tutti i container: `docker stop $(docker ps -aq)`
-* Eliminazione di tutti i container stoppati: `docker rm -f $(docker ps -aq)`
-* Eliminazione delle immagini: `docker rmi -f $(docker images -aq)`
+* Collegarsi a mysql / mariadb dalla macchina host con il client `mycli`: `mycli -uroot -ppwd -h localhost -P3307`
+* Collegarsi a mysql / mariadb dalla macchina host con il client `mysql`: `mycli -uroot -ppwd -h 127.0.0.1 -P3307`. (di default il client mysql usa Unix sockets invece di TCP. Quindi bisogna specificare l'IP per esteso e non usare "localhost" perchè lo traduce in unix socket invece di tcp/ip)
