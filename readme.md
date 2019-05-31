@@ -18,7 +18,7 @@ docker build \
 -t matiux/php:7.3.5-fpm-alpine3.9-base .
 ```
 
-Tag do un'immagine dopo la build:
+Tag di un'immagine dopo la build:
 
 ```bash
 docker tag <id_immagine> \
@@ -140,6 +140,8 @@ RUN /usr/local/bin/xdebug-starter
 USER utente
 
 RUN echo 'alias test="./vendor/bin/simple-phpunit --exclude-group slow"' >> /home/utente/.zshrc \
+    && echo 'alias xon="sed -i \"s/xdebug\.remote_enable=0/xdebug\.remote_enable=1/\" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && kill -USR2 1"' >> /home/utente/.zshrc \
+    && echo 'alias xoff="sed -i \"s/xdebug\.remote_enable=1/xdebug\.remote_enable=0/\" /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && kill -USR2 1"' >> /home/utente/.zshrc \
     && echo 'alias test-all="./vendor/bin/simple-phpunit"' >> /home/utente/.zshrc \
     && echo 'alias sfcc="rm -Rf var/cache/*"' >> /home/utente/.zshrc
 
@@ -160,6 +162,15 @@ RUN /usr/local/bin/xdebug-starter
 ```
 
 Lo script si occupa di identificare il giusto host in base al sistema operativo e di settarlo nel file `/usr/local/etc/php/conf.d/xdebug.ini`. Nella cartella `doc/xdebug/phpstorm` ci sono degli screenshots per la configurazione di xdebug su PhpStorm.
+
+Per l'utilizzo di xdebug con PhpStorm è necessario che queste due variabili d'ambiente siano impostate:
+
+```
+export PHP_IDE_CONFIG="serverName=application"
+export XDEBUG_CONFIG="idekey=PHPSTORM"
+```
+
+Il serverName deve combaciare con il name del server nella configurazione del server in PhpStorm (doc/xdebug/phpstorm/01.png). Nelle immagini buildate ed elencate in questo repository le variabili sono già impostate. L'indicazione è stata riportata nel readme per un'eventuale configurazione xdebug in progetti con configurazioni docker legacy
 
 ### Immagini PHP:
 * PHP 7.3.5 fpm - Apline 3.9 (`docker/php/alpine/3.9/7.3.5-fpm`)

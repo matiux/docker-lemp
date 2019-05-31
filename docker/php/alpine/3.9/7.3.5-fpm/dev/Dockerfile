@@ -23,11 +23,10 @@ RUN apk --no-cache add \
     && echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini;
 
 #Xdebug
-COPY conf/xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+RUN chown utente:utente /usr/local/etc/php/conf.d/
+COPY conf/xdebug.ini /tmp/xdebug.ini
+RUN cat /tmp/xdebug.ini >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 # RUN sed -i "s/xdebug\.remote_host=.*/xdebug\.remote_host="$(/sbin/ip route|awk '/default/ { print $3 }')"/" /usr/local/etc/php/conf.d/xdebug.ini
-# COPY conf/xdebug-starter.sh /usr/local/bin/xdebug-starter
-# RUN chmod +x /usr/local/bin/xdebug-starter
-# RUN /usr/local/bin/xdebug-starter
 ENV PHP_IDE_CONFIG=serverName=application
 
 USER utente

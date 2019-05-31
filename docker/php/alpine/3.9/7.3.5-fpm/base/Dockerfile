@@ -42,14 +42,14 @@ RUN adduser -D -u 1000 utente \
 
 USER utente
 
-# ARG GITHUB_TOKEN
+ARG GITHUB_TOKEN
 # ARG BITBUCKET_CONSUMER_KEY
 # ARG BITBUCKET_CONSUMER_SECRET
 
-# RUN composer config -g github-oauth.github.com $GITHUB_TOKEN \
+RUN composer config -g github-oauth.github.com $GITHUB_TOKEN \
 #     && composer config -g bitbucket-oauth.bitbucket.org.consumer-key $BITBUCKET_CONSUMER_KEY \
 #     && composer config -g bitbucket-oauth.bitbucket.org.consumer-secret $BITBUCKET_CONSUMER_SECRET \
-#     && composer global require \
-#         --no-suggest --no-interaction \
-#         hirak/prestissimo \
-#     && rm -rf ~/.composer/cache
+    && composer global require \
+        --no-suggest --no-interaction \
+        hirak/prestissimo \
+    && rm -rf ~/.composer/cache
