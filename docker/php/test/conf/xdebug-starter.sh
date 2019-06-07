@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/sh
 set -e
 
 # if `HOST_IP` is manually configured as env
@@ -19,7 +19,7 @@ fi
 #     HOST=`10.254.254.254`
 # fi
 
-if [ -f /usr/local/etc/php/conf.d/xdebug.ini ]
+if [ -f $XDEBUG_CONF_FILE ]
 then
-    sed -i "s/xdebug\.remote_host=.*/xdebug\.remote_host=${HOST}/" /usr/local/etc/php/conf.d/xdebug.ini
+    sed -i "s/xdebug\.remote_host=.*/xdebug\.remote_host=${HOST}/" $XDEBUG_CONF_FILE
 fi

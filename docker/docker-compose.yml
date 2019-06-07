@@ -12,23 +12,25 @@ networks:
 
 services:
 
-  web:
-    image: nginx:1.15.12-alpine
-    depends_on:
-      - php
-    volumes:
-      - ../:/var/www/app
-      - ./nginx/php.conf:/etc/nginx/conf.d/default.conf
-      - ./logs/nginx/:/var/log/nginx
-    networks:
-      - app_net
+  # web:
+  #   image: nginx:1.15.12-alpine
+  #   depends_on:
+  #     - php
+  #   volumes:
+  #     - ../:/var/www/app
+  #     - ./nginx/php.conf:/etc/nginx/conf.d/default.conf
+  #     - ./logs/nginx/:/var/log/nginx
+  #   networks:
+  #     - app_net
 
   php:
     # env_file:
     #   - ../.env
     build: php/test
     #image: matiux/php:7.3.5-fpm-alpine3.9-dev
-    hostname: app_hostname
+    # hostname: app_hostname
+    ports:
+      - 8080:80
     volumes:
       - ../:/var/www/app
       - ./data/shell_history:/home/utente/shell_history

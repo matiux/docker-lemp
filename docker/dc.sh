@@ -81,7 +81,7 @@ elif [[ "$1" = "enter-root" ]]; then
         -p ${PROJECT_NAME} \
         exec \
         -u root \
-        php /bin/zsh
+        php /bin/bash
 
 elif [[ "$1" = "enter" ]]; then
 
