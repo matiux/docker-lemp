@@ -1,4 +1,4 @@
-FROM matiux/php:5.3.29-apache2.4.10-base
+FROM matiux/php:5.3.29-apache2-jessie-base
 
 USER root
 
@@ -20,13 +20,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 #Xdebug
 COPY conf/xdebug.ini /tmp/xdebug.ini
-
+ENV XDEBUG_CONF_FILE=$PHP_INI_DIR/conf.d/xdebug.ini
 RUN pecl install xdebug-2.2.7 \
-    && echo "zend_extension=$(find / -iname xdebug.so)" >> $PHP_INI_DIR/conf.d/xdebug.ini \
-    && cat /tmp/xdebug.ini >> $PHP_INI_DIR/conf.d/xdebug.ini
+    && echo ";zend_extension=$(find / -iname xdebug.so)" >> $XDEBUG_CONF_FILE \
+    && cat /tmp/xdebug.ini >> $XDEBUG_CONF_FILE
+RUN chown utente:utente $PHP_INI_DIR/conf.d
 ENV PHP_IDE_CONFIG="serverName=application"
 ENV XDEBUG_CONFIG="idekey=PHPSTORM"
-ENV XDEBUG_CONF_FILE=$PHP_INI_DIR/conf.d/xdebug.ini
+
 
 #Php configs
 RUN echo 'memory_limit = 512M' >> $PHP_INI_DIR/php.ini

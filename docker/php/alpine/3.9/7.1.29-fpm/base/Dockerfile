@@ -40,6 +40,8 @@ RUN adduser -D -u 1000 utente \
         --install-dir=/usr/local/bin --filename=composer \
         --version 1.8.5
 
+ENV PHP_INI_DIR /usr/local/etc/php
+
 USER utente
 
 ARG GITHUB_TOKEN
@@ -47,8 +49,8 @@ ARG GITHUB_TOKEN
 # ARG BITBUCKET_CONSUMER_SECRET
 
 RUN composer config -g github-oauth.github.com $GITHUB_TOKEN \
-    #&& composer config -g bitbucket-oauth.bitbucket.org.consumer-key $BITBUCKET_CONSUMER_KEY \
-    #&& composer config -g bitbucket-oauth.bitbucket.org.consumer-secret $BITBUCKET_CONSUMER_SECRET \
+#     && composer config -g bitbucket-oauth.bitbucket.org.consumer-key $BITBUCKET_CONSUMER_KEY \
+#     && composer config -g bitbucket-oauth.bitbucket.org.consumer-secret $BITBUCKET_CONSUMER_SECRET \
     && composer global require \
         --no-suggest --no-interaction \
         hirak/prestissimo \

@@ -20,7 +20,11 @@ fi
 #     HOST=`10.254.254.254`
 # fi
 
-if [[ -f $XDEBUG_CONF_FILE ]]; then
+if ! test -z "$XDEBUG_CONF_FILE" 
+then
+      XDEBUG_CONF_FILE=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+fi
 
-    sed -i "s/xdebug\.remote_host=.*/xdebug\.remote_host=${HOST}/" $XDEBUG_CONF_FILE
+if [[ -f $XDEBUG_CONF_FILE ]]; then
+  sed -i "s/xdebug\.remote_host=.*/xdebug\.remote_host=${HOST}/" $XDEBUG_CONF_FILE
 fi

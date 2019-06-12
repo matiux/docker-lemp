@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       libmysqlclient-dev \
       libsqlite3-0 \
       libxml2 \
+      unzip \
+      zip \
     && apt-get clean \
     && rm -r /var/lib/apt/lists/*
 
@@ -127,6 +129,18 @@ RUN mkdir /home/utente \
     && useradd -u 1000 --gid 1000 -d /home/utente -s /bin/bash utente \
     && usermod -a -G www-data utente \
     && chown utente /home/utente
+
+ARG GITHUB_TOKEN
+# ARG BITBUCKET_CONSUMER_KEY
+# ARG BITBUCKET_CONSUMER_SECRET
+
+RUN composer config -g github-oauth.github.com $GITHUB_TOKEN \
+#     && composer config -g bitbucket-oauth.bitbucket.org.consumer-key $BITBUCKET_CONSUMER_KEY \
+#     && composer config -g bitbucket-oauth.bitbucket.org.consumer-secret $BITBUCKET_CONSUMER_SECRET \
+    && composer global require \
+        --no-suggest --no-interaction \
+        hirak/prestissimo \
+    && rm -rf ~/.composer/cache
 
 EXPOSE 80
 CMD ["apache2-foreground"]

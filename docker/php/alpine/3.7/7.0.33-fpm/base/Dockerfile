@@ -40,6 +40,8 @@ RUN adduser -D -u 1000 utente \
         --install-dir=/usr/local/bin --filename=composer \
         --version 1.8.5
 
+ENV PHP_INI_DIR /usr/local/etc/php
+
 USER utente
 
 ARG GITHUB_TOKEN

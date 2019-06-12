@@ -20,15 +20,15 @@ RUN apk --no-cache add \
     && apk del .xdebug-build-deps \
     && pecl clear-cache \
     && docker-php-source delete \
-    && echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini;
+    && echo 'memory_limit = 512M' >> $PHP_INI_DIR/conf.d/docker-php-memlimit.ini;
 
 #Xdebug
-RUN chown utente:utente /usr/local/etc/php/conf.d/
+ENV XDEBUG_CONF_FILE=$PHP_INI_DIR/conf.d/docker-php-ext-xdebug.ini
+RUN chown utente:utente $PHP_INI_DIR/conf.d/
 COPY conf/xdebug.ini /tmp/xdebug.ini
-RUN cat /tmp/xdebug.ini >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-# RUN sed -i "s/xdebug\.remote_host=.*/xdebug\.remote_host="$(/sbin/ip route|awk '/default/ { print $3 }')"/" /usr/local/etc/php/conf.d/xdebug.ini
+RUN cat /tmp/xdebug.ini >> $XDEBUG_CONF_FILE \
+    && sed -i 's/^zend_extension/;zend_extension/g' $XDEBUG_CONF_FILE
 ENV PHP_IDE_CONFIG=serverName=application
-ENV XDEBUG_CONF_FILE=/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 USER utente
 
