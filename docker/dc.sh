@@ -92,7 +92,7 @@ elif [[ "$1" = "enter" ]]; then
         exec \
         -u utente \
         -w ${WORKDIR} \
-        php /bin/zsh
+        php /bin/bash
 
 elif [[ "$1" = "down" ]]; then
 

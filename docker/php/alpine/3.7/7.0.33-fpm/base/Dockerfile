@@ -38,7 +38,7 @@ RUN adduser -D -u 1000 utente \
     && chown -R utente /var/www/app \
     && curl -sS https://getcomposer.org/installer | php -- \
         --install-dir=/usr/local/bin --filename=composer \
-        --version 1.8.5
+        --version 1.8.6
 
 ENV PHP_INI_DIR /usr/local/etc/php
 

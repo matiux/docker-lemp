@@ -1,23 +1,20 @@
-FROM php:7.3.5-fpm-alpine3.9
+FROM php:5.5.38-fpm-alpine
 
 RUN apk add --no-cache \
+        bash \
         git \
         icu-dev \
         libmemcached-libs \
-        zlib-dev \
-        libzip-dev \
-    && apk add --no-cache --virtual .ext-build-deps \
+        zip \
+        && apk add --no-cache --virtual .ext-build-deps \
         autoconf \
         g++ \
         gcc \
         libc-dev \
-        libmemcached-dev \
-        make \
-    && pecl install -o \
-        memcached-3.1.3 \
-    && docker-php-ext-enable \
-        memcached \
-    && docker-php-ext-install -j5 \
+        # libmemcached-dev \
+        make
+
+RUN docker-php-ext-install -j5 \
         #`-j` è come per make, per usare 5 thread, accelera la compilazione
         #la regola è che è sempre meglio averla più alta del numero di core a disposzione. La sfiga è che non
         #si può parametrizzare, o ti si invalida la cache della build perché Docker vede un'istruzione diversa
@@ -28,17 +25,17 @@ RUN apk add --no-cache \
         opcache \
         pdo_mysql \
         zip \
-    && apk del .ext-build-deps
+        && apk del .ext-build-deps
 
 WORKDIR /var/www/app
 
 RUN adduser -D -u 1000 utente \
-    && adduser utente www-data \
-    && chown -R utente /home/utente \
-    && chown -R utente /var/www/app \
-    && curl -sS https://getcomposer.org/installer | php -- \
+        && adduser utente www-data \
+        && chown -R utente /home/utente \
+        && chown -R utente /var/www/app \
+        && curl -sS https://getcomposer.org/installer | php -- \
         --install-dir=/usr/local/bin --filename=composer \
-        --version 1.8.5
+        --version 1.8.6
 
 ENV PHP_INI_DIR /usr/local/etc/php
 

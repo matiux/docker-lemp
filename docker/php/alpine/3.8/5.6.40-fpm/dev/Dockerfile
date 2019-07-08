@@ -32,6 +32,7 @@ ENV PHP_IDE_CONFIG=serverName=application
 
 USER utente
 
-COPY conf/custom_zshrc /home/utente
+COPY conf/custom_xrc /home/utente
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true \
-    && echo 'source ~/custom_zshrc' >> /home/utente/.zshrc
+    && echo 'source ~/custom_xrc' >> /home/utente/.zshrc \
+    && echo 'source ~/custom_xrc' >> /home/utente/.bashrc

@@ -1,4 +1,4 @@
-FROM php:5.6.40-fpm-alpine3.8
+FROM php:7.3.6-fpm-alpine3.10
 
 RUN apk add --no-cache \
         git \
@@ -14,7 +14,7 @@ RUN apk add --no-cache \
         libmemcached-dev \
         make \
     && pecl install -o \
-        memcached-2.2.0 \
+        memcached-3.1.3 \
     && docker-php-ext-enable \
         memcached \
     && docker-php-ext-install -j5 \

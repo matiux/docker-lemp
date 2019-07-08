@@ -1,4 +1,4 @@
-FROM php:7.2.18-fpm-alpine3.9
+FROM php:7.2.19-fpm-alpine3.9
 
 RUN apk add --no-cache \
         git \
@@ -38,7 +38,7 @@ RUN adduser -D -u 1000 utente \
     && chown -R utente /var/www/app \
     && curl -sS https://getcomposer.org/installer | php -- \
         --install-dir=/usr/local/bin --filename=composer \
-        --version 1.8.5
+        --version 1.8.6
 
 ENV PHP_INI_DIR /usr/local/etc/php
 

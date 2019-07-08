@@ -12,32 +12,44 @@ networks:
 
 services:
 
-  # web:
-  #   image: nginx:1.15.12-alpine
-  #   depends_on:
-  #     - php
-  #   volumes:
-  #     - ../:/var/www/app
-  #     - ./nginx/php.conf:/etc/nginx/conf.d/default.conf
-  #     - ./logs/nginx/:/var/log/nginx
-  #   networks:
-  #     - app_net
+  web:
+    image: nginx:1.15.12-alpine
+    depends_on:
+      - php
+    volumes:
+      - ../:/var/www/app:cached
+      - ./nginx/php.conf:/etc/nginx/conf.d/default.conf
+      - ./logs/nginx/:/var/log/nginx
+    networks:
+      - app_net
 
   php:
     # env_file:
     #   - ../.env
     build: php/test
-    #image: matiux/php:7.3.5-fpm-alpine3.9-dev
-    # hostname: app_hostname
-    ports:
-      - 8080:80
+    #image: matiux/php:7.3.6-fpm-alpine3.9-dev
+    hostname: app_hostname
     volumes:
       - ../:/var/www/app
       - ./data/shell_history:/home/utente/shell_history
     networks:
       - app_net
     environment:
-      - HISTFILE=/home/utente/shell_history/.zsh_history
+      - HISTFILE=/home/utente/shell_history/.x_history
+  
+  # php:
+  #   # env_file:
+  #   #   - ../.env
+  #   build: php/test
+  #   #image: matiux/php:7.3.6-fpm-alpine3.9-dev
+  #   hostname: app_hostname
+  #   volumes:
+  #     - ../:/var/www/app:cached
+  #     - ./data/shell_history:/home/utente/shell_history
+  #   networks:
+  #     - app_net
+  #   environment:
+  #     - HISTFILE=/home/utente/shell_history/.zsh_history
 
     #  servicemysql:
     #    image: mysql:5.7.24
@@ -66,7 +78,7 @@ services:
     #   volumes:
     #     - app_cache:/var/lib/memcached
     #   networks:
-    #     - app_net
+    #     - app_netW
 
 #   mongodb:
 #     image: mongo:4.1.10

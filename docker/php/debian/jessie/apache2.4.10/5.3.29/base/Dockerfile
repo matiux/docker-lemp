@@ -128,7 +128,11 @@ RUN mkdir /home/utente \
     && groupadd -g 1000 utente \
     && useradd -u 1000 --gid 1000 -d /home/utente -s /bin/bash utente \
     && usermod -a -G www-data utente \
-    && chown utente /home/utente
+    && chown utente /home/utente \
+    && curl -sS https://getcomposer.org/installer | php -- \
+      --install-dir=/usr/local/bin --filename=composer \
+      --version 1.8.6
+
 
 ARG GITHUB_TOKEN
 # ARG BITBUCKET_CONSUMER_KEY
