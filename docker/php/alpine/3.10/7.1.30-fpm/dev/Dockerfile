@@ -1,4 +1,4 @@
-FROM matiux/php:7.1.29-fpm-alpine3.9-base
+FROM matiux/php:7.1.30-fpm-alpine3.10-base
 
 USER root
 
