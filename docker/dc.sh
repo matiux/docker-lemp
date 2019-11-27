@@ -82,7 +82,7 @@ elif [[ "$1" = "enter-root" ]]; then
         -p ${PROJECT_NAME} \
         exec \
         -u root \
-        php /bin/bash
+        ${PHP_CONTAINER} /bin/bash
 
 elif [[ "$1" = "enter" ]]; then
 
@@ -93,7 +93,7 @@ elif [[ "$1" = "enter" ]]; then
         exec \
         -u utente \
         -w ${WORKDIR} \
-        php /bin/bash
+        ${PHP_CONTAINER} /bin/bash
 
 elif [[ "$1" = "down" ]]; then
 
