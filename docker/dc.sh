@@ -4,6 +4,7 @@
 WORKDIR=/var/www/app
 PROJECT_NAME=$(basename $(pwd) | tr  '[:upper:]' '[:lower:]')
 COMPOSE_OVERRIDE=
+PHP_CONTAINER=
 
 #isPhpServiceUp() {
 #
@@ -46,7 +47,7 @@ if [[ "$1" = "composer" ]]; then
         -u utente \
         -v ${PWD}:/var/www/app \
         -w ${WORKDIR} \
-        php \
+        ${PHP_CONTAINER} \
         composer $@
 
 elif [[ "$1" = "up" ]]; then
@@ -71,7 +72,7 @@ elif [[ "$1" = "build" ]]; then
         --file docker/docker-compose.yml \
         ${COMPOSE_OVERRIDE} \
         -p ${PROJECT_NAME} \
-        build $@
+        build ${PHP_CONTAINER}
 
 elif [[ "$1" = "enter-root" ]]; then
 

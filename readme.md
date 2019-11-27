@@ -173,8 +173,9 @@ export XDEBUG_CONFIG="idekey=PHPSTORM"
 Il serverName deve combaciare con il name del server nella configurazione del server in PhpStorm (doc/xdebug/phpstorm/01.png). Nelle immagini buildate ed elencate in questo repository le variabili sono già impostate. L'indicazione è stata riportata nel readme per un'eventuale configurazione xdebug in progetti con configurazioni docker legacy
 
 ### Immagini PHP:
-* PHP 7.3.5 fpm - Apline 3.9 (`docker/php/alpine/3.9/7.3.5-fpm`)
-* PHP 7.1.29 fpm - Apline 3.9 (`docker/php/alpine/3.9/7.1.29-fpm`)
+* PHP 7.3.6 fpm - Apline 3.19 (`docker/php/alpine/3.10/7.3.6-fpm`)
+* PHP 7.2.25 fpm - Apline 3.10 (`docker/php/alpine/3.10/7.2.25-fpm`)
+* PHP 7.1.30 fpm - Apline 3.10 (`docker/php/alpine/3.10/7.1.30-fpm`)
 * PHP 7.0.33 fpm - Apline 3.7 (`docker/php/alpine/3.7/7.0.33-fpm`)
 * PHP 5.6.40 fpm - Apline 3.8 (`docker/php/alpine/3.8/5.6.40-fpm`)
 
