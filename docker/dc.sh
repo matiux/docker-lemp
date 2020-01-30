@@ -4,7 +4,7 @@
 WORKDIR=/var/www/app
 PROJECT_NAME=$(basename $(pwd) | tr  '[:upper:]' '[:lower:]')
 COMPOSE_OVERRIDE=
-PHP_CONTAINER=
+PHP_CONTAINER=php
 
 #isPhpServiceUp() {
 #

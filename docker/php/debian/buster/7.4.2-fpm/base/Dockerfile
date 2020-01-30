@@ -40,7 +40,7 @@ RUN mkdir /home/utente \
     && chown utente /home/utente \
     && curl -sS https://getcomposer.org/installer | php -- \
       --install-dir=/usr/local/bin --filename=composer \
-      --version 1.8.6
+      --version 1.9.2
 
 ENV PHP_INI_DIR /usr/local/etc/php
 

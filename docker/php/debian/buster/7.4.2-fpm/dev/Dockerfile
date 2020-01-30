@@ -6,6 +6,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     default-mysql-client \
     git \
+    iproute2 \
     mycli \
     nano \
     rsync \
@@ -14,6 +15,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     vim \
     wget \
     zsh \
+    && pecl install xdebug-2.9.1 \
+    && docker-php-ext-enable xdebug \
     && apt-get remove --purge -y software-properties-common \
     && apt-get autoremove -y \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
