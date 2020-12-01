@@ -1,22 +1,15 @@
 version: '3.7'
 
+secrets:
+  id_rsa:
+    file:
+  id_rsa.pub:
+    file:
+  known_hosts:
+    file:
+
 services:
   web:
     ports:
       - 8080:80
       - 443:443
-  phpmyadmin:
-    ports:
-      - 8081:80
-  # mongodb:
-  #   ports:
-  #     - 27017:27017
-  # mongo-express:
-  #   ports:
-  #     - 8082:8081
-  servicemysql:
-    ports:
-      - 3307:3306
-  # nodejs:
-  #   ports:
-  #     - 1337:1337
