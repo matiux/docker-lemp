@@ -1,6 +1,18 @@
 Configurazioni docker / docker-compose
 =====
 
+## Immagini PHP:
+* [PHP 8.0.1 fpm - Alpine 3.13](docker/php/alpine/3.13/8.0.1-fpm)
+* [PHP 8.0.0 fpm - Alpine 3.12](docker/php/alpine/3.12/8.0.0-fpm)
+* [PHP 7.4.2 fpm - Debian Buster](docker/php/debian/buster/7.4.2-fpm)
+* [PHP 7.4.1 fpm - Alpine 3.11](docker/php/alpine/3.11/7.4.1-fpm)
+* [PHP 7.3.6 fpm - Alpine 3.10](docker/php/alpine/3.10/7.3.6-fpm)
+* [PHP 7.2.25 fpm - Alpine 3.10](docker/php/alpine/3.10/7.2.25-fpm)
+* [PHP 7.1.30 fpm - Alpine 3.10](docker/php/alpine/3.10/7.1.30-fpm)
+* [PHP 7.0.33 fpm - Alpine 3.7](docker/php/alpine/3.7/7.0.33-fpm)
+* [PHP 5.6.40 fpm - Alpine 3.8](docker/php/alpine/3.8/5.6.40-fpm)
+* [PHP 5.3.29 apache - Jessie](docker/php/debian/jessie/apache2.4.10/5.3.29)
+
 [Hub pubblico](https://hub.docker.com/r/matiux/php/tags?page=1&ordering=last_updated)
 
 ## Istruzioni per generare le build 
@@ -138,24 +150,8 @@ export PHP_IDE_CONFIG="serverName=application"
 export XDEBUG_CONFIG="idekey=PHPSTORM"
 ```
 
-####
-
-[Screenshots configurazioni](doc/xdebug/phpstorm)
-
-## Xdebug 3
+#### Xdebug 3
 [Opzioni rinominate](https://xdebug.org/docs/upgrade_guide)
-
-### Immagini PHP:
-* [PHP 8.0.1 fpm - Alpine 3.13](docker/php/alpine/3.13/8.0.1-fpm)
-* [PHP 8.0.0 fpm - Alpine 3.12](docker/php/alpine/3.12/8.0.0-fpm)
-* [PHP 7.4.2 fpm - Debian Buster](docker/php/debian/buster/7.4.2-fpm)
-* [PHP 7.4.1 fpm - Alpine 3.11](docker/php/alpine/3.11/7.4.1-fpm)
-* [PHP 7.3.6 fpm - Alpine 3.10](docker/php/alpine/3.10/7.3.6-fpm)
-* [PHP 7.2.25 fpm - Alpine 3.10](docker/php/alpine/3.10/7.2.25-fpm)
-* [PHP 7.1.30 fpm - Alpine 3.10](docker/php/alpine/3.10/7.1.30-fpm)
-* [PHP 7.0.33 fpm - Alpine 3.7](docker/php/alpine/3.7/7.0.33-fpm)
-* [PHP 5.6.40 fpm - Alpine 3.8](docker/php/alpine/3.8/5.6.40-fpm)
-* [PHP 5.3.29 apache - Jessie](docker/php/debian/jessie/apache2.4.10/5.3.29)
 
 ## Comandi Docker utili:
 
@@ -165,6 +161,10 @@ export XDEBUG_CONFIG="idekey=PHPSTORM"
 * Eliminazione delle immagini: `docker rmi -f $(docker images -aq)`
 * Informazioni sul volume: `docker volume inspect <id_volume>`
 * Ottenere l'ip di un container: `docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' nomecontainer`
+
+## Configurazioni PHPStorm
+
+[Screenshots configurazioni](doc/xdebug/phpstorm)
 
 ## Miscellanea:
 
