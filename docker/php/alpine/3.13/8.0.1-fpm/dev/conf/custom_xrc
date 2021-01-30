@@ -1,0 +1,10 @@
+#General Alias
+alias app="cd /var/www/app"
+alias ll="ls -alhF"
+alias memflush="echo \"flush_all\" | nc servicememcached 11211"
+
+#Xdebug Alias
+alias xon="sed -i 's/^;zend_extension/zend_extension/g' $XDEBUG_CONF_FILE && kill -USR2 1"
+alias xoff="sed -i 's/^zend_extension/;zend_extension/g' $XDEBUG_CONF_FILE && kill -USR2 1"
+alias xmode.coverage="sed -i 's/xdebug\.mode=.*/xdebug\.mode=coverage/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && kill -USR2 1"
+alias xmode.debug="sed -i 's/xdebug\.mode=.*/xdebug\.mode=debug/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && kill -USR2 1"
