@@ -12,30 +12,31 @@ networks:
 
 services:
 
-  web:
-    image: nginx:1.15.12-alpine
-    depends_on:
-      - php
-    volumes:
-      - ../:/var/www/app:cached
-      - ./nginx/php.conf:/etc/nginx/conf.d/default.conf
-      - ./logs/nginx/:/var/log/nginx
-    networks:
-      - app_net
+#  web:
+#    image: nginx:1.15.12-alpine
+#    depends_on:
+#      - php
+#    volumes:
+#      - ../:/var/www/app:cached
+#      - ./nginx/php.conf:/etc/nginx/conf.d/default.conf
+#      - ./logs/nginx/:/var/log/nginx
+#    networks:
+#      - app_net
 
   php:
     # env_file:
     #   - ../.env
     build: php/test
     #image: matiux/php:7.3.6-fpm-alpine3.9-dev
-    hostname: app_hostname
+    hostname: my_app
     volumes:
       - ../:/var/www/app
       - ./data/shell_history:/home/utente/shell_history
     networks:
       - app_net
     environment:
-      - HISTFILE=/home/utente/shell_history/.x_history
+#      - HISTFILE=/home/utente/shell_history/.x_history
+      - HISTFILE=/var/www/shell_history/.x_history
     secrets:
       - source: id_rsa
         target: /home/utente/.ssh/id_rsa

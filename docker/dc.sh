@@ -4,6 +4,7 @@ WORKDIR=/var/www/app
 PROJECT_NAME=$(basename "$(pwd)" | tr '[:upper:]' '[:lower:]')
 COMPOSE_OVERRIDE=
 PHP_CONTAINER=php
+UTENTE=utente
 
 if [[ -f "./docker/docker-compose.override.yml" ]]; then
   COMPOSE_OVERRIDE="--file ./docker/docker-compose.override.yml"
@@ -14,45 +15,87 @@ DC_BASE_COMMAND="docker-compose
     -p ${PROJECT_NAME}
     ${COMPOSE_OVERRIDE}"
 
-DC_RUN="${DC_BASE_COMMAND}
-    run
-    --rm
-    -u utente
-    -v ${PWD}:/var/www/app
+#DC_RUN="${DC_BASE_COMMAND}
+#    run
+#    --rm
+#    -u ${UTENTE}
+#    -v ${PWD}:${WORKDIR}
+#    -w ${WORKDIR}
+#    ${PHP_CONTAINER}"
+
+  DC_EXEC="${DC_BASE_COMMAND}
+    exec
+    -u ${UTENTE}
+    -T
     -w ${WORKDIR}
     ${PHP_CONTAINER}"
 
 if [[ "$1" == "composer" ]]; then
 
   shift 1
-  ${DC_RUN} \
+  ${DC_EXEC} \
     composer "$@"
 
 elif [[ "$1" == "php-cs-fixer-fix" ]]; then
 
   shift 1
-  ${DC_RUN} \
-    vendor/bin/php-cs-fixer fix --config=.php_cs.dist "$@"
+  ${DC_EXEC} \
+    vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php "$@"
 
 elif [[ "$1" == "php-cs-fixer" ]]; then
 
   shift 1
-  ${DC_RUN} \
+  ${DC_EXEC} \
     vendor/bin/php-cs-fixer "$@"
 
 elif [[ "$1" == "psalm" ]]; then
 
   shift 1
-  ${DC_RUN} \
+  ${DC_EXEC} \
     vendor/bin/psalm "$@"
 
 elif [[ "$1" == "phpunit" ]]; then
 
   shift 1
-  ${DC_RUN} \
-    vendor/bin/phpunit "$@"
+  ${DC_EXEC} \
+    bin/phpunit --colors=always --testdox "$@"
 
-elif [[ "$1" = "up" ]]; then
+elif [[ "$1" == "coverage-badge" ]]; then
+
+  shift 1
+  ${DC_EXEC} \
+    scripts/commands/update-coverage-badge
+
+elif [[ "$1" == "generate-coverage" ]]; then
+
+  shift 1
+  ${DC_EXEC} \
+    scripts/commands/generate-coverage
+
+elif [[ "$1" == "badge" ]]; then
+
+  shift 1
+
+  rm -f "public/$3.svg"
+  rm -f "public/$3.png"
+
+  ${DC_EXEC} \
+    vendor/bin/poser \
+      "$1" \
+      "$2" \
+      green \
+      -p "public/$3.svg" \
+      -s plastic \
+        &>/dev/null
+
+  ${DC_EXEC} \
+    inkscape --export-png="public/$3.png" \
+      --export-dpi=200 \
+      --export-background-opacity=0 \
+      --without-gui "public/$3.svg" \
+        &>/dev/null
+
+elif [[ "$1" == "up" ]]; then
 
   shift 1
   ${DC_BASE_COMMAND} \
@@ -74,7 +117,7 @@ elif [[ "$1" == "enter" ]]; then
 
   ${DC_BASE_COMMAND} \
     exec \
-    -u utente \
+    -u ${UTENTE} \
     -w ${WORKDIR} \
     ${PHP_CONTAINER} /bin/zsh
 

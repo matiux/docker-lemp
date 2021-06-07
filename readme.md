@@ -2,6 +2,7 @@ Configurazioni docker / docker-compose
 =====
 
 ## Immagini PHP:
+* [PHP 8.0.* fpm - Debian Buster](docker/php/debian/buster/8.0-fpm)
 * [PHP 8.0.1 fpm - Alpine 3.13](docker/php/alpine/3.13/8.0.1-fpm)
 * [PHP 8.0.0 fpm - Alpine 3.12](docker/php/alpine/3.12/8.0.0-fpm)
 * [PHP 7.4.2 fpm - Debian Buster](docker/php/debian/buster/7.4.2-fpm)
